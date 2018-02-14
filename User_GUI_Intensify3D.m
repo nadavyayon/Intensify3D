@@ -354,11 +354,11 @@ set(handles.sliderThreshold,'Value',Factor);
 imcontrast
 ThresholdRed = round(256*Factor);
 axes(handles.axes1);
-NewMap=colormap;
-handles.CM=colormap;
+NewMap=colormap(gray(256));
+handles.CM=colormap(gray(256));
 guidata(hObject,handles)
 NewMap(ThresholdRed+1:end,:) = repmat([1 0 0],256-ThresholdRed,1);
-colormap(NewMap);
+colormap(handles.axes1,NewMap);
 
 
 function Threads_Callback(hObject, eventdata, handles)
@@ -478,7 +478,7 @@ NewMap=handles.CM;
 colormap(NewMap);
 NewMap=colormap;
 NewMap(ThresholdRed+1:end,:) = repmat([1 0 0],256-ThresholdRed,1);
-colormap(NewMap);
+colormap(handles.axes1,NewMap);
 
 
 
