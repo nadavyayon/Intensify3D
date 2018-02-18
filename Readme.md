@@ -1,5 +1,18 @@
+# Intensify3D - Normalizing 3D Image Stacks
 
-  
+## Installation instructions
+ Two options exist to use intensify3D 
+1)	For MATLAB users:
+Clone or Download the source code, set the MATLAB_Code directory as the current working directory and run file:  User_GUI_Intensify3D.m
+
+ 
+2)	For standalone:
+Download the latest version of the compiled code which fits your operating system:
+https://github.com/nadavyayon/Intensify3D/releases 
+After installation, execute Intensify3D
+
+ 
+Follow instruction bellow as well as test data instructions.
 # Graphical user interface (GUI) Manual. 
 
 Before starting please read the manuscript and make sure the assumptions of normalization are met. Intensify3D can correct an unlimited number of images since it operates in a serial manner. Hence, it only supports image sequences. However if your image stack is in multi-Tiff format there is an option in the GUI to convert the file to individual images. The *.tif files should ideally be unprocessed data in a 12 or 16bit format. Memory requirements depend on image size and parallel processing. Based on our experience, the maximum requirements are 750 bytes/pixel. Thus, processing a single Light-Sheet image of 2560x2160 pixels will require ~ 4Gb of RAM from each processor + 4Gb for general processes. For example, if your PC has 4 cores, it is possible to analyze 4 Light Sheet images simultaneously, which will require 20Gb of RAM. It is highly recommended to start with a few representative images (~20), adjust the parameters and only then run the process on the entire stack.
@@ -18,3 +31,13 @@ a. The graphical user interface is divided to 3 panels:
 Last, after running Intensify3D, The “Start” will change to messages regarding the run progression.
 
 *intuition for selection of the MBI value: The correct approximation of the image background depends on “cleaning out” the signal pixels by thresholding and spatial filtering. High brightness signal pixels can affect the ability of the spatial filter.  The MBI should be set so that the most signal pixels will be removed without removing background pixels. Notice the red-labeled pixels in the example image of bright spheres. Lowering the MBI would result in removing background pixels and increasing the MBI would retain more signal pixels. Both ways will lead to a sub-optimal estimation of the background. 
+
+
+
+ All rights reserved. No part of this software may be reproduced, 
+ distributed, or transmitted in any form or by any means, including photocopying,
+ recording, or other electronic or mechanical methods,
+ without the prior written permission of the publisher,
+ except in the case of a citation and certain other
+ noncommercial uses permitted by copyright law.
+
