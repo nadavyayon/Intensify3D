@@ -13,13 +13,13 @@ After installation, execute Intensify3D
 
  
 Follow instruction bellow as well as test data instructions.
-# Graphical user interface (GUI) Manual. 
+## Graphical user interface (GUI) Manual. 
 
 Before starting please read the manuscript and make sure the assumptions of normalization are met. Intensify3D can correct an unlimited number of images since it operates in a serial manner. Hence, it only supports image sequences. However if your image stack is in multi-Tiff format there is an option in the GUI to convert the file to individual images. The *.tif files should ideally be unprocessed data in a 12 or 16bit format. Memory requirements depend on image size and parallel processing. Based on our experience, the maximum requirements are 750 bytes/pixel. Thus, processing a single Light-Sheet image of 2560x2160 pixels will require ~ 4Gb of RAM from each processor + 4Gb for general processes. For example, if your PC has 4 cores, it is possible to analyze 4 Light Sheet images simultaneously, which will require 20Gb of RAM. It is highly recommended to start with a few representative images (~20), adjust the parameters and only then run the process on the entire stack.
 
 ![Alt text](data/Figure_S1-01.jpg?raw=true "Optional Title")
 
-## Operation instructions and GUI options:
+### Operation instructions and GUI options:
 
 a. The graphical user interface is divided to 3 panels:
 * Panel 1 – Folder or file selection: Here the user selects the directory containing the individual images in the stack in TIFF format. Alternatively, if the images are in multi-TIFF format, the user should select the “browse file” option and the multi-Tiff will be converted to multiple file form in a directory carrying the file name.
