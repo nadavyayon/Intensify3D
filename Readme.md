@@ -1,10 +1,14 @@
-Figure S1. Graphical user interface (GUI) Manual.
+
+  
+# Graphical user interface (GUI) Manual. 
 
 Before starting please read the manuscript and make sure the assumptions of normalization are met. Intensify3D can correct an unlimited number of images since it operates in a serial manner. Hence, it only supports image sequences. However if your image stack is in multi-Tiff format there is an option in the GUI to convert the file to individual images. The *.tif files should ideally be unprocessed data in a 12 or 16bit format. Memory requirements depend on image size and parallel processing. Based on our experience, the maximum requirements are 750 bytes/pixel. Thus, processing a single Light-Sheet image of 2560x2160 pixels will require ~ 4Gb of RAM from each processor + 4Gb for general processes. For example, if your PC has 4 cores, it is possible to analyze 4 Light Sheet images simultaneously, which will require 20Gb of RAM. It is highly recommended to start with a few representative images (~20), adjust the parameters and only then run the process on the entire stack.
 
-Operation instructions and GUI options:
+![Alt text](data/Figure_S1-01.jpg?raw=true "Optional Title")
 
-a. The graphical user interface is divided to 3 panels:
+## Operation instructions and GUI options:
+
+* a. The graphical user interface is divided to 3 panels:
 Panel 1 – Folder or file selection: Here the user selects the directory containing the individual images in the stack in TIFF format. Alternatively, if the images are in multi-TIFF format, the user should select the “browse file” option and the multi-Tiff will be converted to multiple file form in a directory carrying the file name.
 
 Panel 2 – Estimate your background: The objective of this section is to assist the user to select the ideal maximum background intensity (MBI) in a single image. This value will be used by Intensify3D to estimate the background across all images in the stack. “Image number to display” is used to select a representative image from the stack that carries a clear signal. Once the image has been selected, pressing the “show image and estimate parameters” button displays the requested image is displayed, a brightness contrast adjustment window opens (b) and an initial estimation of the MBI is assigned based on the 100th percentile of intensity potentially showing only signal pixels in red. Next, the user should adjust the MBI selection with the dedicated slide bar at the bottom of the image in the following order: (1) adjust brightness and contrast (2) move slide bar to set MBI (performing 2 before 1 will show a distorted selection of the MBI). Repeat 1->2 until satisfied with the result*. The matched value for the MBI will be set in the “stack parameters” section in panel 3.
