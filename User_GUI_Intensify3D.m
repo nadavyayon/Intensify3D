@@ -23,7 +23,7 @@ function varargout = User_GUI_Intensify3D(varargin)
 
 % Edit the above text to modify the response to help User_GUI_Intensify3D
 
-% Last Modified by GUIDE v2.5 13-Feb-2018 12:38:31
+% Last Modified by GUIDE v2.5 11-Apr-2018 17:18:51
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -229,7 +229,7 @@ end
 
 % --- Executes on button press in Execute.
 function Execute_Callback(hObject, eventdata, handles)
-TissueDetection = find([get(handles.TissueDetection_1,'Value'), get(handles.TissueDetection_2,'Value'), get(handles.TissueDetection_3,'Value')]);
+TissueDetection = find([get(handles.TissueDetection_1,'Value'), get(handles.TissueDetection_2,'Value'), get(handles.TissueDetection_3,'Value'), get(handles.TissueDetection_4,'Value')]);
 NormType = find([get(handles.ZType_1,'Value'), get(handles.ZType_2,'Value'), get(handles.ZType_3,'Value'), get(handles.ZType_4,'Value')]);
 
 clc
@@ -246,12 +246,8 @@ catch me
     set(handles.Execute,'FontSize',20);
     set(handles.Execute,'ForegroundColor','black');
     set(handles.Execute,'String','Start');
-    msgbox('Something went wrong, Check that all parameters are filled in correctly.')
+    msgbox(['Something went wrong, Check that all parameters are filled in correctly. Error in function - ',me.stack(1).name,'.    Line - ',num2str(me.stack(1).line),'.   ',me.message,'  *Tip - try lowering the MBI'])
 end
-
-    
-    
-
 
 % --- Executes on button press in togglebutton1.
 function togglebutton1_Callback(hObject, eventdata, handles)
