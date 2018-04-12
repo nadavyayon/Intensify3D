@@ -313,7 +313,7 @@ else % Normalize no background detection
             % find quantile value for each image individually 
             ImageQuantiles = quantile(ImD(:),NoOfQuantiles);
             if UserDefinedQuantile==1  % enable the user to define a value larger than the brightest pixel
-                EstimatedMaxTissueIntensity = MaxTissueIntensity; 
+                EstimatedMaxTissueIntensity = max(ImD(:)); 
             else
                 EstimatedMaxTissueIntensity = ImageQuantiles(UserDefinedQuantile*NoOfQuantiles)
             end
@@ -364,7 +364,7 @@ else % Normalize no background detection
              %     find quantile value for each image individually 
             ImageQuantiles = quantile(ImD(:),NoOfQuantiles);
             if UserDefinedQuantile==1  % enable the user to define a value larger than the brightest pixel
-                EstimatedMaxTissueIntensity = MaxTissueIntensity; 
+                EstimatedMaxTissueIntensity = max(ImD(:)); 
             else
                 EstimatedMaxTissueIntensity = ImageQuantiles(UserDefinedQuantile*NoOfQuantiles);
             end
