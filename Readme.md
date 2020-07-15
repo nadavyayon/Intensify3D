@@ -8,9 +8,9 @@ Intensify3D yields facilitated visualization and quantification of fluorescent s
 
 In sort, Intensify3D will first correct for intensity gradients in xy, then match image statistics (see below) across Z and finally match statistics across different samples. 
  
-See Examples for a tutorial  
-
-for single stack normalization see intensify3D 1.0  
+[See Examples & Tutorial](https://github.com/nadavyayon/Intensify3D/tree/master/Examples/Readme.md)
+[For single stack normalization use intensify3D 1.1](https://github.com/nadavyayon/Intensify3D/releases/tag/v1.1)
+ 
 
 ## Installation instructions
 
