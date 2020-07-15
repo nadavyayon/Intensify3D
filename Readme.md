@@ -25,10 +25,9 @@ Intensify3D can correct an unlimited number of images since it operates in a ser
 The *.tif files should ideally be unprocessed data in a 12 or 16bit format. 
 
 
-<img src="Figs/GUI.jpg?raw=true." data-canonical-src="Figs/GUI.jpg?raw=true" width="200" />
+<img src="Figs/GUI.jpg?raw=true." data-canonical-src="Figs/GUI.jpg?raw=true" />
 
 
-#![](Figs/GUI.jpg?raw=true width="75")
 
 ### Operation instructions and GUI options:
 
@@ -53,10 +52,19 @@ The rest of the parametrs will determine the nature of the signal normalization 
 
 ### Normalizaiton Intuition
 
-![](Figs/Normalization_Intuition.jpg?raw=true)
+
+<img align="left" src="Figs/Normalization_Intuition.jpg?raw=true" data-canonical-src="Figs/Normalization_Intuition.jpg?raw=true" width="500" />
 
 **Between-image normalization types and the expected effect on image data**
 Each normalization approach is presented relative to the pixel histogram of the “ideal case” imaging setup (Target histogram). Left/right panels are before/after normalization a. Upper quantile normalization will multiply each image in the stack by a different constant to match the upper quantile (extrapolated from the maximum background intensity) value for the entire stack. b. Contrast stretch normalization linearly transforms each image in the stack so that the lower quantile (25th) and Upper quantile values will match for the entire stack. c. Semi-quantile normalization will force 10000 image quantiles lower than the upper quantile to match across the stack. From the upper quantile and above, the pixels will undergo the contrast stretch correction.
+
+<br></br>
+<br></br>
+<br></br>
+<br></br>
+<br></br>
+<br></br>
+
 
 
  
