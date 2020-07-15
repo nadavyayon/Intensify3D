@@ -1,39 +1,59 @@
 # Intensify3D - Normalizing 3D Image Stacks
 
+## Introduction
+
+Intensify3D (Plus) is an easy to use image normalization tool for large scale fluorescent imaging. 
+It corrects heterogeneities in the signal in 3D but also across different experimatal samples.
+Intensify3D yields facilitated visualization and quantification of fluorescent signals.
+
+In sort, Intensify3D will first correct for intensity gradients in xy, then match image statistics (see below) across Z and finally match statistics across different samples. 
+ 
+See Examples for a tutorial  
+
+for single stack normalization see intensify3D 1.0  
+
 ## Installation instructions
- Two options exist to use intensify3D 
-1)	For MATLAB users:
-Clone or Download the source code, set the MATLAB_Code directory as the current working directory and run file:  User_GUI_Intensify3D.m
 
- 
-2)	For standalone:
-Download the latest version of the compiled code which fits your operating system:
-https://github.com/nadavyayon/Intensify3D/releases 
-After installation, execute Intensify3D
+Clone or Download the source code, set the MATLAB_Code directory as the current working directory add to path and run file:  User_GUI_Intensify3D.m
 
- 
 Follow instruction bellow as well as test data instructions.
 ## Graphical user interface (GUI) Manual. 
 
-Before starting please read the manuscript and make sure the assumptions of normalization are met. Intensify3D can correct an unlimited number of images since it operates in a serial manner. Hence, it only supports image sequences. However if your image stack is in multi-Tiff format there is an option in the GUI to convert the file to individual images. The *.tif files should ideally be unprocessed data in a 12 or 16bit format. Memory requirements depend on image size and parallel processing. Based on our experience, the maximum requirements are 750 bytes/pixel. Thus, processing a single Light-Sheet image of 2560x2160 pixels will require ~ 4Gb of RAM from each processor + 4Gb for general processes. For example, if your PC has 4 cores, it is possible to analyze 4 Light Sheet images simultaneously, which will require 20Gb of RAM. It is highly recommended to start with a few representative images (~20), adjust the parameters and only then run the process on the entire stack.
+Before starting, to understand the basic concept of intensify3D please read the manuscript *link* and make sure the assumptions of normalization are met. 
+Intensify3D can correct an unlimited number of images since it operates in a serial manner. Hence, it only supports image sequences. 
+The *.tif files should ideally be unprocessed data in a 12 or 16bit format. 
 
-![Alt text](Figs/Figure_S1-01.jpg?raw=true "Optional Title")
+![Alt text](Figs/GUI.jpg?raw=true "Optional Title")
 
 ### Operation instructions and GUI options:
 
-a. The graphical user interface is divided to 3 panels:
-* Panel 1 – Folder or file selection: Here the user selects the directory containing the individual images in the stack in TIFF format. Alternatively, if the images are in multi-TIFF format, the user should select the “browse file” option and the multi-Tiff will be converted to multiple file form in a directory carrying the file name.
+The graphical user interface is divided to **4 panels** (steps):  
 
-* Panel 2 – Estimate your background: The objective of this section is to assist the user to select the ideal maximum background intensity (MBI) in a single image. This value will be used by Intensify3D to estimate the background across all images in the stack. “Image number to display” is used to select a representative image from the stack that carries a clear signal. Once the image has been selected, pressing the “show image and estimate parameters” button displays the requested image is displayed, a brightness contrast adjustment window opens (b) and an initial estimation of the MBI is assigned based on the 100th percentile of intensity potentially showing only signal pixels in red. Next, the user should adjust the MBI selection with the dedicated slide bar at the bottom of the image in the following order: (1) adjust brightness and contrast (2) move slide bar to set MBI (performing 2 before 1 will show a distorted selection of the MBI). Repeat 1->2 until satisfied with the result*. The matched value for the MBI will be set in the “stack parameters” section in panel 3.
+**Step 1** – Select parent folder: Here the user selects the directory containing the different image sets (biological samples) divided into directories.
+Parallel processing section: Is very useful when analyzing large image stacks: the GUI detects how many cores your CPU has and offers the user the option of how many of them will be dedicated to the run. If your MATLAB license does not include the parallelization package, select 0 and work without it (this limitation does not apply to the standalone version). 
 
-* Panel 3 – Setting run parameters: The parallel processing section very useful when analyzing large image stacks. The GUI detects how many cores your CPU has and offers the user the option of how many of them will be dedicated to the run. If your MATLAB license does not include the parallelization package, select 0 and work without it (this limitation does not apply to standalone version). The “stack parameters” section defines the first and last image that would be processed in the stack, the MBI (described above) and the spatial filter size. Spatial filter size determines the frequency of intensity changes that would be corrected by Intensify3D. The minimum value for this parameter should be a least twice to diameter of the largest signal structure. Lower values could affect the signal. “Z normalization type” section allows section of the desired normalization type across the images in the stack (for more information see main text and supplementary figure S3).  Last, Intensify3D has the ability to detect the background or tissue area in an image based on 3 clustering algorithms:Threshold, K means and Expectation Maximization (E.M.). This option should be explored for images where not all the image area is relevant for normalization and is critical in such images. The sensitivity of the tissue detection should be experimented by the user to fit to the specific image set (for more information see main text and supplementary figure S4).     
+**Step 2** - Shows which directories were found and will be normalized withing and across samples.
 
-Last, after running Intensify3D, The “Start” will change to messages regarding the run progression.
+**Step 3** – Estimate your background: The objective of this section is to assist the user in selecting the ideal maximum background intensity (MBI) in a single image. This value will be used by Intensify3D to estimate the background across all images in the stacks. 
+“Image number” and “Folder Number” are used to select a representative image from the stack that carries a clear signal. 
+Once the image has been selected, pressing the “show image and estimate parameters” button shows the requested image, a brightness contrast adjustment window opens and an initial estimation of the MBI is assigned based on the 99th percentile of intensity potentially showing only signal pixels in red. 
+Next, the user should adjust the MBI selection with the dedicated slide bar at the bottom of the image. 
+- The matched value for the MBI will be set in the “stack parameters” section in panel 4.
 
-*intuition for selection of the MBI value: The correct approximation of the image background depends on “cleaning out” the signal pixels by thresholding and spatial filtering. High brightness signal pixels can affect the ability of the spatial filter.  The MBI should be set so that the most signal pixels will be removed without removing background pixels. Notice the red-labeled pixels in the example image of bright spheres. Lowering the MBI would result in removing background pixels and increasing the MBI would retain more signal pixels. Both ways will lead to a sub-optimal estimation of the background. 
+**Step 4** – Set run parameters: 
+Automatic Tissue Detection - Intensify3D has the ability to detect the background or tissue area in an image in 2 ways: simply by taking all the pixels above a certain threshold as the tissue, or by clustering algorithms: K means and Expectation Maximization (E.M.). This option is critical for images where not all the image area is relevant for normalization. The sensitivity of the tissue detection should be tested by the user to fit to the specific image set.
+- If the process of tissue was already copleted to your satisfaction select "Existing Support Files Folder" to save processing time.
+The rest of the parametrs will determine the nature of the signal normalization in xy, xyz and xyz-between folders. 
 
 
+### Normalizaiton Intuition
+![Alt text](Figs/Normalizarion_Intuition.jpg?raw=true "Optional Title")
 
+**Between-image normalization types and the expected effect on image data**
+Each normalization approach is presented relative to the pixel histogram of the “ideal case” imaging setup (Target histogram). Left/right panels are before/after normalization a. Upper quantile normalization will multiply each image in the stack by a different constant to match the upper quantile (extrapolated from the maximum background intensity) value for the entire stack. b. Contrast stretch normalization linearly transforms each image in the stack so that the lower quantile (25th) and Upper quantile values will match for the entire stack. c. Semi-quantile normalization will force 10000 image quantiles lower than the upper quantile to match across the stack. From the upper quantile and above, the pixels will undergo the contrast stretch correction.
+
+
+ 
  All rights reserved. No part of this software may be reproduced, 
  distributed, or transmitted in any form or by any means, including photocopying,
  recording, or other electronic or mechanical methods,
