@@ -25,7 +25,7 @@ Intensify3D can correct an unlimited number of images since it operates in a ser
 The *.tif files should ideally be unprocessed data in a 12 or 16bit format. 
 
 
-<img src="Figs/GUI.jpg?raw=true." data-canonical-src="Figs/GUI.jpg?raw=true" />
+<img src="Figs/GUI2.jpg?raw=true." data-canonical-src="Figs/GUI.jpg?raw=true" />
 
 
 
