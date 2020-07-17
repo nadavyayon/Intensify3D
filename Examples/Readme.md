@@ -27,7 +27,7 @@ Between stacks, we chose a weaker assumption where we "only" want for the genera
 
 The following image shows the result of this run.
 
-<img align="left" src="Montage.jpg?raw=true." data-canonical-src="Montage.jpg?raw=true" width = "250" />
+<img align="left" src="Montage2.jpg?raw=true." data-canonical-src="Montage.jpg?raw=true" width = "250" />
 
 
 # Example 2 - AutoFourescent Scanning of an iDISCO brain 
