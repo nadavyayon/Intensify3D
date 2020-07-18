@@ -33,9 +33,7 @@ Find this dataset in the following link: [Artificial 3D spheres](https://drive.g
 <img align="left" src="Montage2-01.jpg?raw=true." data-canonical-src="Montage.jpg?raw=true" />
 
 
-<br></br>
-<br></br>
-<br></br>
+
 <br></br>
 <br></br>
 
