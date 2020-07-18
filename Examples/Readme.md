@@ -33,7 +33,7 @@ The following image shows the result of this run.
 
 # Example 2 - AutoFourescent Scanning of an iDISCO brain 
 
-<img src="GUI-iDISCO.png?raw=true." data-canonical-src="GUI-iDISCO.png?raw=true" />
+<img src="GUI_iDISCO_AutoFlu.jpg?raw=true." data-canonical-src="GUI_iDISCO_AutoFlu.jpg?raw=true" />
 
 Down sampled light sheet scan of an iDISCO cleared mouse hemisphere. scanning iDISCO samples in GFP exitation/emission settings produces a distinct autoflourescent signal. while informative, this signal is easlily photobleached and is prune for distortions. 
 Here, since there is no clear definition of signal and background I set the MBI to max value. To accuretly estimate the tissue area I set the background detection to threshold mode. in terms of z normalization the composition of imaged components varies along the z axis so semi-quantile is a too strong assumption so I selected contrast-stretch. 
