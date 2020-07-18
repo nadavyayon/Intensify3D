@@ -3,7 +3,7 @@
 ## Introduction
 
 Intensify3D (Plus) is an easy to use image normalization tool for large scale fluorescent imaging. 
-It corrects heterogeneities in the signal in 3D but also across different experimatal samples.
+It corrects heterogeneities in the signal in 3D but also across different experimental samples.
 Intensify3D yields facilitated visualization and quantification of fluorescent signals.
 
 In sort, Intensify3D will first correct for intensity gradients in xy, then match image statistics (see below) across Z and finally match statistics across different samples. 
@@ -46,8 +46,8 @@ Next, the user should adjust the MBI selection with the dedicated slide bar at t
 
 **Step 4** – Set run parameters: 
 Automatic Tissue Detection - Intensify3D has the ability to detect the background or tissue area in an image in 2 ways: simply by taking all the pixels above a certain threshold as the tissue, or by clustering algorithms: K means and Expectation Maximization (E.M.). This option is critical for images where not all the image area is relevant for normalization. The sensitivity of the tissue detection should be tested by the user to fit to the specific image set.
-- If the process of tissue was already copleted to your satisfaction select "Existing Support Files Folder" to save processing time.
-The rest of the parametrs will determine the nature of the signal normalization in xy, xyz and xyz-between folders. 
+- If the process of tissue was already completed to your satisfaction select "Existing Support Files Folder" to save processing time.
+The rest of the parameters will determine the nature of the signal normalization in xy, xyz and xyz-between folders. 
 
 
 ### Normalizaiton Intuition
