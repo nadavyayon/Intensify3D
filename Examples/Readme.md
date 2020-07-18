@@ -33,20 +33,6 @@ Find this dataset in the following link: [Artificial 3D spheres](https://drive.g
 <img align="left" src="Montage2-01.jpg?raw=true." data-canonical-src="Montage.jpg?raw=true" />
 
 
-
-<br></br>
-<br></br>
-<br></br>
-<br></br>
-<br></br>
-<br></br>
-<br></br>
-<br></br>
-
-
-
-
-
 # Example 2 - Auto-Fluorescent  Scanning of an iDISCO brain 
 
 <img src="GUI_iDISCO_AutoFlu3.jpg?raw=true." data-canonical-src="GUI_iDISCO_AutoFlu3.jpg?raw=true" />
@@ -56,23 +42,20 @@ Here, since there is no clear definition of signal and background I set the MBI 
 
 Find this dataset in the following link: [iDISCO Auto-Flu](https://drive.google.com/file/d/11k61eBUM8aNUg5Gf73U8hbwQbGFErtJ_/view?usp=sharing)
 
-The result of this narmalization is inllustrated in the video below:
+The result of this normalization is illustrated in the video below:
 
 
  ![Alt text](iDISCOHemi.gif?raw=true "Optional Title")
 
-<br></br>
-<br></br>
-<br></br>
 
 # Example 3 - Alexa647 Scan of an iDISCO brain
  
 <img src="GUI_iDISCO.jpg?raw=true." data-canonical-src="GUI_iDISCO.jpg?raw=true" />
  
-The following example is a cortical region of an iDISCO cleared mouse with staining against endogeneuosly expressed tdTomato with alexa647. This sample has a clearly defined signal and a poertion of the image that does represent any imaged tissue. For this reason I selected the tissue detection option, a threhold cutoff and a spatial filter that is large enough to accuratly estimate the backgound with minimal interference of the signal. Here I selected Semi-quantile normalization for Z and contrast-stretch for between stack normalization. 
+The following example is a cortical region of an iDISCO cleared mouse with staining against endogenously expressed tdTomato with alexa647. This sample has a clearly defined signal and a portion of the image that does represent any imaged tissue. For this reason I selected the tissue detection option, a threshold cutoff and a spatial filter that is large enough to accurately estimate the background with minimal interference of the signal. Here I selected Semi-quantile normalization for Z and contrast-stretch for between stack normalization. 
 
 
-The result of this narmalization is inllustrated below:
+The result of this normalization is illustrated below:
 
 <img src="iDISCO samples.jpg?raw=true." data-canonical-src="iDISCO samples.jpg?raw=true" />
 
