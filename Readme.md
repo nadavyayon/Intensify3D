@@ -20,7 +20,7 @@ Clone or Download the source code, set the MATLAB_Code directory as the current 
 Follow instruction bellow as well as test data instructions.
 ## Graphical user interface (GUI) Manual. 
 
-Before starting, to understand the basic concept of intensify3D please read the manuscript *link* and make sure the assumptions of normalization are met. 
+Before starting, to understand the basic concept of intensify3D please read (and cite if used) the [manuscript](https://www.nature.com/articles/s41598-018-22489-1) and make sure the assumptions of normalization are met. 
 Intensify3D can correct an unlimited number of images since it operates in a serial manner. Hence, it only supports image sequences. 
 The *.tif files should ideally be unprocessed data in a 12 or 16bit format. 
 
