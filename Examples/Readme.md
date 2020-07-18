@@ -52,9 +52,6 @@ The result of this narmalization is inllustrated in the video below:
 
  ![Alt text](iDISCOHemi.gif?raw=true "Optional Title")
 
-
-<br></br>
-<br></br>
 <br></br>
 <br></br>
 <br></br>
@@ -65,6 +62,8 @@ The result of this narmalization is inllustrated in the video below:
  
 The following example is a cortical region of an iDISCO cleared mouse with staining against endogeneuosly expressed tdTomato with alexa647. This sample has a clearly defined signal and a poertion of the image that does represent any imaged tissue. For this reason I selected the tissue detection option, a threhold cutoff and a spatial filter that is large enough to accuratly estimate  
 
+
+<img src="iDISCO samples.jpg?raw=true." data-canonical-src="iDISCO samples.jpg?raw=true" />
 
  
  All rights reserved. No part of this software may be reproduced, 
