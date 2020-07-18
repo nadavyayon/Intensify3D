@@ -27,7 +27,7 @@ Between stacks, we chose a weaker assumption where we "only" want for the genera
 
 The following image shows the result of this run showing representative images from the image stacks. 
 
-Find this dataset in the following link: [Artificial 3D spheres](https://github.com/nadavyayon/Intensify3D/tree/master/Examples/Readme.md)
+Find this dataset in the following link: [Artificial 3D spheres](https://drive.google.com/file/d/1tfSCFSalF4edfj0q2lJxSFqGs1gkj2XH/view?usp=sharing)
 
 
 <img align="left" src="Montage2-01.jpg?raw=true." data-canonical-src="Montage.jpg?raw=true" />
@@ -55,10 +55,6 @@ The result of this narmalization is inllustrated in the video below:
  ![Alt text](iDISCOHemi.gif?raw=true "Optional Title")
 
 
-<br></br>
-<br></br>
-<br></br>
-<br></br>
 <br></br>
 <br></br>
 <br></br>
