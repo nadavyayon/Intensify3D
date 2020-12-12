@@ -6,7 +6,7 @@ Intensify3D (Plus) is an easy to use image normalization tool for large scale fl
 It corrects heterogeneities in the signal in 3D but also across different experimental samples.
 Intensify3D yields facilitated visualization and quantification of fluorescent signals.
 
-In sort, Intensify3D will first correct for intensity gradients in xy, then match image statistics (see below) across Z and finally match statistics across different samples. 
+In short, Intensify3D will first correct for intensity gradients in xy, then match image statistics (see below) across Z and finally match statistics across different samples. 
  
 [See Examples & Tutorial](https://github.com/nadavyayon/Intensify3D/tree/master/Examples/Readme.md)
 
