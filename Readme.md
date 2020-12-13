@@ -17,6 +17,8 @@ In short, Intensify3D will first correct for intensity gradients in xy, then mat
 
 Clone or Download the source code, set the MATLAB_Code directory as the current working directory add to path and run file:  User_GUI_Intensify3D.m
 
+Alternatively, there is a complied version (Intensify3D_V2_0_Plus_Installer_web) that can work for users that don't have a MATLAB licence or are looking for a standalone version. Please note that this intaller will  download about ~2Gb of libabries needed to run during the installation process.  
+
 Follow instruction bellow as well as test data instructions.
 ## Graphical user interface (GUI) Manual. 
 
