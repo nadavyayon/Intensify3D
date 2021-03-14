@@ -1,5 +1,6 @@
 function [NewMeanLowerUpperQuantiles,NewSemiQuantiles] = Intensify3D_Core(DirectoryOf16bit,MinIm,MaxIm,STDNumber,MaxTissueIntensity,FilterSize,HasBackground,NormalizeType,Threads,ImageToSelectFrom,handles,UserSelectedThrehold,TissueSmoothing,ExistingSupportFilesFolder,ToNormXY)  %#ok<INUSL>
 tic % start Stopwatch
+% Version 2.1 Updated last by Nadav 15.03.21
 %% initiation
 warning('off');
 if Threads
@@ -207,7 +208,7 @@ if HasBackground
     if Threads
         % parfor_progress(MaxIm-MinIm+1);
         parfor i = MinIm:MaxIm
-            
+             
                 % Load Images
                 FilterXYPar = FilterXY;
 %                 Folder16bitInfoPar = Folder16bitInfo;
@@ -217,6 +218,7 @@ if HasBackground
                 % support
                 Ts = Tiff([DirectoryOf16bit,'' filesep 'NormalizedBackground' filesep 'SupportImages' filesep 'Tissue_Area_', sprintf('%3.4d',i)],'r');
                 ImS = logical(Ts.read());
+                if sum(ImS(:))> ((size(ImS,1)*size(ImS,1))/1000) % test if a tissue was detected in more that 0.1% of the pixels, otherwize skip image
                 Ts.close();        
                 % find quantile value for each image individually 
                 ImageQuantiles = quantile(ImD(ImS),NoOfQuantiles);
@@ -227,7 +229,7 @@ if HasBackground
                 end
                 % Remove_Peaks and zeros 
                 ImD_Smooth = ImD;
-                Maxes = (ImD(:) > EstimatedMaxTissueIntensity);
+                Maxes = (ImD(:) >= EstimatedMaxTissueIntensity);
                 TissuePixelvalues = ImD(logical(ImS.*(ImD_Smooth<quantile(ImD_Smooth(:),0.9)).*(ImD_Smooth>quantile(ImD_Smooth(:),0.1))));
                 if size(TissuePixelvalues(:),1)>100     
                    RandValues = emprand(TissuePixelvalues,sum(sum(Maxes)),1); % generate signal-replacing values
@@ -235,7 +237,7 @@ if HasBackground
                 end     
                % Smooth along XY
                 if ToNormXY
-                    ImD_Smooth(not(ImS)) = EstimatedMaxTissueIntensity/2;%quantile(ImD(TissuePixelIndices),UserDefinedQuantile);
+                    ImD_Smooth(not(ImS)) = ImageQuantiles(NoOfQuantiles/2);%quantile(ImD(TissuePixelIndices),UserDefinedQuantile);
                     ImD_Smooth = Savitzky_Golay(ImD_Smooth,FilterXYPar(1),FilterXYPar(2),1);
                     ImD_Smooth = Savitzky_Golay(ImD_Smooth,FilterXYPar(1),FilterXYPar(2),1); % 2nd time
                     ImD_Smooth_Norm = ImD_Smooth/max(ImD_Smooth(:));   
@@ -259,8 +261,10 @@ if HasBackground
                    UpperQuantile = quantile(NormXY(ImLin),0.99);
                 end
                 
-           
-                Maxes = (NormXY(:) > UpperQuantile); 
+           if i == 1501
+               i 
+           end
+                Maxes = (NormXY(:) >= UpperQuantile); 
                 ImageQuantiles = quantile(NormXY(logical(ImLin.*not(Maxes))),NoOfQuantiles);
                 SemiQuantiles(i,:) =  ImageQuantiles; 
                 % for Contrast Stretch
@@ -271,7 +275,7 @@ if HasBackground
            %     clc
                 % parfor_progress;    
             
-            
+           end
         end
     else 
         for i = MinIm:MaxIm
@@ -285,6 +289,8 @@ if HasBackground
                 Ts = Tiff([DirectoryOf16bit,'' filesep 'NormalizedBackground' filesep 'SupportImages' filesep 'Tissue_Area_', sprintf('%3.4d',i)],'r');
                 ImS = logical(Ts.read());
                 Ts.close();           
+                if sum(ImS(:))> ((size(ImS,1)*size(ImS,1))/1000) % test if a tissue was detected in more that 0.1% of the pixels, otherwize skip image
+
 
                 % find quantile value for each image individually 
                 ImageQuantiles = quantile(ImD(ImS),NoOfQuantiles);
@@ -303,7 +309,7 @@ if HasBackground
                 end     
                 % Smooth along XY
                 if ToNormXY
-                    ImD_Smooth(not(ImS)) = EstimatedMaxTissueIntensity/2;%quantile(ImD(TissuePixelIndices),UserDefinedQuantile);
+                    ImD_Smooth(not(ImS)) = ImageQuantiles(NoOfQuantiles/2);%quantile(ImD(TissuePixelIndices),UserDefinedQuantile);
                     ImD_Smooth = Savitzky_Golay(ImD_Smooth,FilterXYPar(1),FilterXYPar(2),1);
                     ImD_Smooth = Savitzky_Golay(ImD_Smooth,FilterXYPar(1),FilterXYPar(2),1); % 2nd time
                     ImD_Smooth_Norm = ImD_Smooth/max(ImD_Smooth(:));   
@@ -325,7 +331,7 @@ if HasBackground
                 else
                    UpperQuantile = quantile(NormXY(ImLin),0.99);
                 end
-                Maxes = (NormXY(:) > UpperQuantile); 
+                Maxes = (NormXY(:) >= UpperQuantile); 
                 ImageQuantiles = quantile(NormXY(logical(ImLin.*not(Maxes))),NoOfQuantiles);
                 SemiQuantiles(i,:) =  ImageQuantiles; 
                 % for Contrast Stretch
@@ -336,7 +342,7 @@ if HasBackground
            %     clc
                 % parfor_progress;  
             
-            
+                end
         end
     end
 else % Normalize with no background detection 
@@ -388,7 +394,7 @@ else % Normalize with no background detection
                 else
                    UpperQuantile = quantile(NormXY(ImLin),0.99);
                 end
-                Maxes = (NormXY(:) > UpperQuantile); 
+                Maxes = (NormXY(:) >= UpperQuantile); 
                 ImageQuantiles = quantile(NormXY(logical(ImLin.*not(Maxes))),NoOfQuantiles);
                 SemiQuantiles(i,:) =  ImageQuantiles; 
                 % for Contrast Stretch
@@ -420,7 +426,7 @@ else % Normalize with no background detection
                 TissuePixelIndices = (ImD<EstimatedMaxTissueIntensity);
                 % Remove_Peaks and zero pixels     
                 ImD_Smooth = ImD;
-                Maxes = (ImD > EstimatedMaxTissueIntensity);
+                Maxes = (ImD >= EstimatedMaxTissueIntensity);
                 TissuePixelvalues = ImD(logical(TissuePixelIndices.*(ImD_Smooth<quantile(ImD_Smooth(:),0.9)).*(ImD_Smooth>quantile(ImD_Smooth(:),0.1))));
                 RandValues = emprand(TissuePixelvalues,sum(sum(Maxes)),1); % generate signal-replacing values
                 ImD_Smooth(Maxes)= RandValues;
@@ -448,7 +454,7 @@ else % Normalize with no background detection
                 else
                     UpperQuantile = quantile(NormXY(ImLin),0.99);
                 end
-                Maxes = (NormXY(:) > UpperQuantile); 
+                Maxes = (NormXY(:) >= UpperQuantile); 
                 ImageQuantiles = quantile(NormXY(logical(ImLin.*not(Maxes))),NoOfQuantiles);
                 SemiQuantiles(i,:) =  ImageQuantiles; 
                 % for Contrast Stretch
@@ -477,7 +483,14 @@ if NormalizeType == 1 % quantile
              warning('off','all');
              Folder16bitInfoPar = Folder16bitInfo;
              ImSizePar = ImSize;
-             Ti = Tiff([DirectoryOf16bit,'' filesep 'NormalizedBackground' filesep 'Norm_',Folder16bitInfoPar(FirstImageFileIndex+i-1).name],'r+');
+             flag = 1;
+             try 
+                Ti = Tiff([DirectoryOf16bit,'' filesep 'NormalizedBackground' filesep 'Norm_',Folder16bitInfoPar(FirstImageFileIndex+i-1).name],'r+');
+             catch 
+                flag = 0
+             end
+             
+             if flag 
              ImD = double(Ti.read());
              % Convert to double 
              if HasBackground
@@ -495,7 +508,7 @@ if NormalizeType == 1 % quantile
                   UpperQuantile = quantile(ImD(ImSLin),0.95);
              end
              LowerValue = LowerUpperQuantiles(i,1);
-             Maxes = (ImD > UpperQuantile);
+             Maxes = (ImD >= UpperQuantile);
              NormXYZ = ImD;
              NormXYZ(Maxes) = (ImD(Maxes) - LowerValue)*( (SemiQuantilesMean(end) - SemiQuantilesMean(NoOfQuantiles/2)) / (UpperQuantile - LowerValue) ) + SemiQuantilesMean(NoOfQuantiles/2); % contrast sretching of high intensity pixels
              ImSLin = logical(ImSLin.*not(Maxes(:))) ;
@@ -509,21 +522,27 @@ if NormalizeType == 1 % quantile
              NormXYZ(Maxes) = (max(NormXYZ(ImSLin))/min(NormXYZ(Maxes)))*NormXYZ(Maxes); 
              SaveTiffInCode([DirectoryOf16bit,'' filesep 'NormalizedBackground' filesep 'Norm_',Folder16bitInfo(FirstImageFileIndex+i-1).name],16,'w',NormXYZ);
              % parfor_progress;
-             NewMaxes = (NormXYZ(:) > UpperQuantile); 
+             NewMaxes = (NormXYZ(:) >= UpperQuantile); 
             ImageQuantiles = quantile(NormXYZ(logical(ImSLin.*not(NewMaxes))),NoOfQuantiles);
             NewSemiQuantiles(i,:) =  ImageQuantiles; 
             % for Contrast Stretch
             LowerValue = quantile(NormXYZ(ImSLin),0.25);
             NewLowerUpperQuantiles(i,:) = [LowerValue UpperQuantile];
-            
+            end
          end
      else
          for i = MinIm:MaxIm
              warning('off','all');
              Folder16bitInfoPar = Folder16bitInfo;
              ImSizePar = ImSize;
-             Ti = Tiff([DirectoryOf16bit,'' filesep 'NormalizedBackground' filesep 'Norm_',Folder16bitInfoPar(FirstImageFileIndex+i-1).name],'r+');
-             ImD = double(Ti.read());
+             flag = 1
+             try
+                Ti = Tiff([DirectoryOf16bit,'' filesep 'NormalizedBackground' filesep 'Norm_',Folder16bitInfoPar(FirstImageFileIndex+i-1).name],'r+');
+             catch
+                 flag = 0;
+             end
+             if flag 
+                ImD = double(Ti.read());
              % Convert to double  
              if HasBackground
                  Ts = Tiff([DirectoryOf16bit,'' filesep 'NormalizedBackground' filesep 'SupportImages' filesep 'Tissue_Area_', sprintf('%3.4d',i)],'r');
@@ -540,7 +559,7 @@ if NormalizeType == 1 % quantile
                  UpperQuantile = quantile(ImD(ImSLin),0.95);
              end
              LowerValue = LowerUpperQuantiles(i,1);
-             Maxes = (ImD > UpperQuantile);
+             Maxes = (ImD >= UpperQuantile);
              NormXYZ = ImD;
              NormXYZ(Maxes) = (ImD(Maxes) - LowerValue)*( (SemiQuantilesMean(end) - SemiQuantilesMean(NoOfQuantiles/2)) / (UpperQuantile - LowerValue) ) + SemiQuantilesMean(NoOfQuantiles/2); % contrast sretching of high intensity pixels
              ImSLin = logical(ImSLin.*not(Maxes(:))) ;
@@ -553,14 +572,14 @@ if NormalizeType == 1 % quantile
              NormXYZ = reshape(NormXYZ,ImSizePar(1),ImSizePar(2));
              NormXYZ(Maxes) = (max(NormXYZ(ImSLin))/min(NormXYZ(Maxes)))*NormXYZ(Maxes); 
              SaveTiffInCode([DirectoryOf16bit,'' filesep 'NormalizedBackground' filesep 'Norm_',Folder16bitInfo(FirstImageFileIndex+i-1).name],16,'w',NormXYZ);
-             NewMaxes = (NormXYZ(:) > UpperQuantile); 
+             NewMaxes = (NormXYZ(:) >= UpperQuantile); 
             ImageQuantiles = quantile(NormXYZ(logical(ImSLin.*not(NewMaxes))),NoOfQuantiles);
             NewSemiQuantiles(i,:) =  ImageQuantiles; 
             % for Contrast Stretch
             LowerValue = quantile(NormXYZ(ImSLin),0.25);
             NewLowerUpperQuantiles(i,:) = [LowerValue UpperQuantile];
            
-         
+             end
          end
      end
 end  
@@ -593,7 +612,7 @@ if NormalizeType == 2 % contrast stretch
            NormXYZ(ImSLin) = (ImD(ImSLin) - LowerQuantile)*( (LowerUpperQuantilesMean(2) - LowerUpperQuantilesMean(1)) / (UpperQuantile - LowerQuantile) ) + LowerUpperQuantilesMean(1); % contrast sretching
            SaveTiffInCode([DirectoryOf16bit,'' filesep 'NormalizedBackground' filesep 'Norm_',Folder16bitInfo(FirstImageFileIndex+i-1).name],16,'w',NormXYZ);
                        % parfor_progress;
-                       NewMaxes = (NormXYZ(:) > UpperQuantile); 
+                       NewMaxes = (NormXYZ(:) >= UpperQuantile); 
             ImageQuantiles = quantile(NormXYZ(logical(ImSLin.*not(NewMaxes))),NoOfQuantiles);
             NewSemiQuantiles(i,:) =  ImageQuantiles; 
             % for Contrast Stretch
@@ -624,7 +643,7 @@ if NormalizeType == 2 % contrast stretch
            LowerQuantile = LowerUpperQuantiles(i,1);
            NormXYZ(ImSLin) = (ImD(ImSLin) - LowerQuantile)*( (LowerUpperQuantilesMean(2) - LowerUpperQuantilesMean(1)) / (UpperQuantile - LowerQuantile) ) + LowerUpperQuantilesMean(1); % contrast sretching
            SaveTiffInCode([DirectoryOf16bit,'' filesep 'NormalizedBackground' filesep 'Norm_',Folder16bitInfo(FirstImageFileIndex+i-1).name],16,'w',NormXYZ);
-           NewMaxes = (NormXYZ(:) > UpperQuantile); 
+           NewMaxes = (NormXYZ(:) >= UpperQuantile); 
             ImageQuantiles = quantile(NormXYZ(logical(ImSLin.*not(NewMaxes))),NoOfQuantiles);
             NewSemiQuantiles(i,:) =  ImageQuantiles; 
             % for Contrast Stretch
@@ -647,7 +666,7 @@ end
         NormXYZ = (NormXY./EstimatedMaxTissueIntensitySeriersNorm(i)); %Normalize
         SaveTiffInCode([DirectoryOf16bit,'' filesep 'NormalizedBackground' filesep 'Norm_',Folder16bitInfo(FirstImageFileIndex+i-1).name],16,'w',NormXYZ);
         % parfor_progress;
-        NewMaxes = (NormXYZ(:) > UpperQuantile); 
+        NewMaxes = (NormXYZ(:) >= UpperQuantile); 
         ImageQuantiles = quantile(NormXYZ(logical(ImLin.*not(NewMaxes))),NoOfQuantiles);
         SemiQuantiles(i,:) =  ImageQuantiles; 
         % for Contrast Stretch
@@ -664,7 +683,7 @@ end
         NormXYZ = (NormXY./EstimatedMaxTissueIntensitySeriersNorm(i)); %Normalize
         SaveTiffInCode([DirectoryOf16bit,'' filesep 'NormalizedBackground' filesep 'Norm_',Folder16bitInfo(FirstImageFileIndex+i-1).name],16,'w',NormXYZ);
         % parfor_progress;
-        NewMaxes = (NormXYZ(:) > UpperQuantile); 
+        NewMaxes = (NormXYZ(:) >= UpperQuantile); 
         ImageQuantiles = quantile(NormXYZ(logical(ImLin.*not(NewMaxes))),NoOfQuantiles);
         NewSemiQuantiles(i,:) =  ImageQuantiles; 
         % for Contrast Stretch
